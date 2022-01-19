@@ -58,6 +58,15 @@ class TodoListViewModel @Inject constructor(
                     )
                 }
             }
+            is TodoListEvent.OnTaskImportanceChange -> {
+                viewModelScope.launch {
+                    repository.insertTodo(
+                        event.todo.copy(
+                            isImportant = !event.isImportant
+                        )
+                    )
+                }
+            }
         }
     }
 

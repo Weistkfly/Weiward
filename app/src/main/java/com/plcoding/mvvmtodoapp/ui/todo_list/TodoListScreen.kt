@@ -1,9 +1,7 @@
 package com.plcoding.mvvmtodoapp.ui.todo_list
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -55,20 +53,31 @@ fun TodoListScreen(
             }
         }
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(todos.value) { todo ->
-                TodoItem(
-                    todo = todo,
-                    onEvent = viewModel::onEvent,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            viewModel.onEvent(TodoListEvent.OnTodoClick(todo))
-                        }
-                        .padding(16.dp)
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp)
+        ){
+            Text(
+                text = "To do",
+                style = MaterialTheme.typography.h4
+            )
+            LazyColumn(
+
+            )
+             {
+                items(todos.value) { todo ->
+                    TodoItem(
+                        todo = todo,
+                        onEvent = viewModel::onEvent,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.onEvent(TodoListEvent.OnTodoClick(todo))
+                            }
+                            .padding(10.dp)
+                    )
+                }
             }
         }
     }

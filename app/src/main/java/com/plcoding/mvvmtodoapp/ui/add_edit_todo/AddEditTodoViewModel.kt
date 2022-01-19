@@ -30,6 +30,8 @@ class AddEditTodoViewModel @Inject constructor(
     var description by mutableStateOf("")
         private set
 
+    var taskColor by mutableStateOf(Todo.taskColors.lastIndex)
+
     private val _uiEvent =  Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
@@ -40,6 +42,7 @@ class AddEditTodoViewModel @Inject constructor(
                 repository.getTodoById(todoId)?.let { todo ->
                     title = todo.title
                     description = todo.description ?: ""
+                    taskColor = todo.taskColor
                     this@AddEditTodoViewModel.todo = todo
                 }
             }
@@ -67,11 +70,17 @@ class AddEditTodoViewModel @Inject constructor(
                             title = title,
                             description = description,
                             isDone = todo?.isDone ?: false,
+                            isImportant = todo?.isImportant ?: false,
+                            taskColor = taskColor,
+                            dateDone = System.currentTimeMillis(),
                             id = todo?.id
                         )
                     )
                     sendUiEvent(UiEvent.PopBackStack)
                 }
+            }
+            is AddEditTodoEvent.OnTaskTypeChange -> {
+                taskColor = event.color
             }
         }
     }

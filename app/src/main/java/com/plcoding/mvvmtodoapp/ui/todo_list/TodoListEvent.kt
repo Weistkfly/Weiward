@@ -8,4 +8,5 @@ sealed class TodoListEvent {
     object OnUndoDeleteClick: TodoListEvent()
     data class OnTodoClick(val todo: Todo): TodoListEvent()
     object OnAddTodoClick: TodoListEvent()
+    data class OnTaskImportanceChange(val todo: Todo, val isImportant: Boolean): TodoListEvent()
 }
