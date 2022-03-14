@@ -49,14 +49,17 @@ fun AddEditTodoScreen(
             .fillMaxSize()
             .padding(16.dp),
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                viewModel.onEvent(AddEditTodoEvent.OnSaveTodoClick)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Save"
-                )
-            }
+            ExtendedFloatingActionButton(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Save"
+                    )
+                },
+                text = {
+                       Text(text = "Save")
+                },
+                onClick = { viewModel.onEvent(AddEditTodoEvent.OnSaveTodoClick)})
         }
     ) {
         Column(
@@ -104,8 +107,8 @@ fun AddEditTodoScreen(
                             .background(color)
                             .border(
                                 width = 3.dp,
-                                color = when(viewModel.taskColor){
-                                     colorInt -> Color.Black
+                                color = when (viewModel.taskColor) {
+                                    colorInt -> Color.Black
                                     else -> {
                                         Color.Transparent
                                     }

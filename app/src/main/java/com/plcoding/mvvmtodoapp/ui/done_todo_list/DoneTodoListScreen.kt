@@ -1,4 +1,4 @@
-package com.plcoding.mvvmtodoapp.ui.todo_list
+package com.plcoding.mvvmtodoapp.ui.done_todo_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,12 +13,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.plcoding.mvvmtodoapp.ui.todo_list.TodoItem
+import com.plcoding.mvvmtodoapp.ui.todo_list.TodoListEvent
+import com.plcoding.mvvmtodoapp.ui.todo_list.TodoListViewModel
 import com.plcoding.mvvmtodoapp.util.UiEvent
 import kotlinx.coroutines.flow.collect
-import kotlin.time.Duration.Companion.days
 
 @Composable
-fun TodoListScreen(
+fun DoneTodoListScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: TodoListViewModel = hiltViewModel()
 ) {
@@ -41,46 +43,31 @@ fun TodoListScreen(
             }
         }
     }
-    Scaffold(
-        scaffoldState = scaffoldState,
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                icon = {Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add"
-                )},
-                text = {
-                    Text(text = "Add Todo")
-                       },
-                onClick = { viewModel.onEvent(TodoListEvent.OnAddTodoClick)})
-        }
-    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp)
         ){
             Text(
-                text = "To do",
+                text = "Done",
                 style = MaterialTheme.typography.h4
             )
             LazyColumn()
-             {
+            {
                 items(todos.value) { todo ->
-                    if (!todo.isDone){
-                    TodoItem(
-                        todo = todo,
-                        onEvent = viewModel::onEvent,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                viewModel.onEvent(TodoListEvent.OnTodoClick(todo))
-                            }
-                            .padding(10.dp)
-                    )
-                }
+                    if (todo.isDone) {
+                        TodoItem(
+                            todo = todo,
+                            onEvent = viewModel::onEvent,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.onEvent(TodoListEvent.OnTodoClick(todo))
+                                }
+                                .padding(10.dp)
+                        )
+                    }
                 }
             }
         }
     }
-}

@@ -9,7 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,7 +77,8 @@ fun TodoItem(
             onEvent(TodoListEvent.OnTaskImportanceChange(todo, todo.isImportant))
         }) {
             Icon(
-                imageVector = Icons.Default.Favorite,
+                imageVector = Icons.Filled.Warning,
+                tint = importantTask,
                 contentDescription = "Importance"
             )
         }
