@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,7 +15,6 @@ import com.plcoding.mvvmtodoapp.ui.todo_list.TodoItem
 import com.plcoding.mvvmtodoapp.ui.todo_list.TodoListEvent
 import com.plcoding.mvvmtodoapp.ui.todo_list.TodoListViewModel
 import com.plcoding.mvvmtodoapp.util.UiEvent
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun DoneTodoListScreen(
@@ -25,6 +22,7 @@ fun DoneTodoListScreen(
     viewModel: TodoListViewModel = hiltViewModel()
 ) {
     val todos = viewModel.todos.collectAsState(initial = emptyList())
+    val coins = viewModel.coins.collectAsState(initial = emptyList())
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -58,6 +56,7 @@ fun DoneTodoListScreen(
                     if (todo.isDone) {
                         TodoItem(
                             todo = todo,
+                            coin = coins.value.first(),
                             onEvent = viewModel::onEvent,
                             modifier = Modifier
                                 .fillMaxWidth()

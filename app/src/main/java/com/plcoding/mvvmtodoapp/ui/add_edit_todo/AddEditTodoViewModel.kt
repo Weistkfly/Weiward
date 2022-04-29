@@ -3,11 +3,16 @@ package com.plcoding.mvvmtodoapp.ui.add_edit_todo
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.plcoding.mvvmtodoapp.data.Todo
+import com.plcoding.mvvmtodoapp.data.todo.Todo
 import com.plcoding.mvvmtodoapp.data.TodoRepository
+import com.plcoding.mvvmtodoapp.ui.theme.androidTask
+import com.plcoding.mvvmtodoapp.ui.theme.commandedTask
+import com.plcoding.mvvmtodoapp.ui.theme.schoolTask
+import com.plcoding.mvvmtodoapp.ui.theme.selfTask
 import com.plcoding.mvvmtodoapp.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -31,6 +36,10 @@ class AddEditTodoViewModel @Inject constructor(
         private set
 
     var taskColor by mutableStateOf(Todo.taskColors.lastIndex)
+        private set
+
+    var coinVal by mutableStateOf(0)
+        private set
 
     private val _uiEvent =  Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -43,6 +52,7 @@ class AddEditTodoViewModel @Inject constructor(
                     title = todo.title
                     description = todo.description ?: ""
                     taskColor = todo.taskColor
+                    coinVal = todo.coinValue
                     this@AddEditTodoViewModel.todo = todo
                 }
             }
@@ -73,6 +83,7 @@ class AddEditTodoViewModel @Inject constructor(
                             isImportant = todo?.isImportant ?: false,
                             taskColor = taskColor,
                             dateDone = System.currentTimeMillis(),
+                            coinValue = coinVal,
                             id = todo?.id
                         )
                     )
@@ -81,6 +92,12 @@ class AddEditTodoViewModel @Inject constructor(
             }
             is AddEditTodoEvent.OnTaskTypeChange -> {
                 taskColor = event.color
+                when(taskColor){
+                    androidTask.toArgb() -> coinVal = 5
+                    schoolTask.toArgb() -> coinVal = 3
+                    selfTask.toArgb() -> coinVal = 2
+                    commandedTask.toArgb() -> coinVal = 1
+                }
             }
         }
     }

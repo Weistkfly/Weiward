@@ -28,6 +28,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideTodoRepository(db: TodoDatabase): TodoRepository {
-        return TodoRepositoryImpl(db.dao)
+        return TodoRepositoryImpl(db.dao, db.daoCoin)
     }
 }

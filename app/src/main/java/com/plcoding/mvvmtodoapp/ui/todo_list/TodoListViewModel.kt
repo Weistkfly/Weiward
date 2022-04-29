@@ -2,7 +2,7 @@ package com.plcoding.mvvmtodoapp.ui.todo_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.plcoding.mvvmtodoapp.data.Todo
+import com.plcoding.mvvmtodoapp.data.todo.Todo
 import com.plcoding.mvvmtodoapp.data.TodoRepository
 import com.plcoding.mvvmtodoapp.util.Routes
 import com.plcoding.mvvmtodoapp.util.UiEvent
@@ -18,6 +18,7 @@ class TodoListViewModel @Inject constructor(
 ): ViewModel() {
 
     val todos = repository.getTodos()
+    val coins = repository.getCoins()
 
     private val _uiEvent =  Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -62,10 +63,26 @@ class TodoListViewModel @Inject constructor(
                 viewModelScope.launch {
                     repository.insertTodo(
                         event.todo.copy(
-                            isImportant = !event.isImportant
+                            isImportant = !event.isImportant,
+                            coinValue = if (!event.isImportant){
+                                event.todo.coinValue + 2
+                            } else {
+                                event.todo.coinValue - 2
+                            }
                         )
                     )
                 }
+            }
+
+            is TodoListEvent.GetCoinReward -> {
+                viewModelScope.launch {
+                    repository.insertCoin(
+                        event.coin.copy(
+                            earnedCoins = event.todo.coinValue + event.coin.earnedCoins
+                        )
+                    )
+                }
+
             }
         }
     }

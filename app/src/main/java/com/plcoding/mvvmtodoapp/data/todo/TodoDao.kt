@@ -1,4 +1,4 @@
-package com.plcoding.mvvmtodoapp.data
+package com.plcoding.mvvmtodoapp.data.todo
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -14,12 +14,6 @@ interface TodoDao {
 
     @Query("SELECT * FROM todo WHERE id = :id")
     suspend fun getTodoById(id: Int): Todo?
-
-   // @Query("SELECT * FROM todo WHERE isImportant = 1")
-   // suspend fun getTodoByImportance(isImportant: Boolean): Todo?
-
-   // @Query("SELECT * FROM todo WHERE isDone = 1")
-   // suspend fun getDoneTodo(isDone: Boolean): Todo?
 
     @Query("SELECT * FROM todo")
     fun getTodos(): Flow<List<Todo>>

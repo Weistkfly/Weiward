@@ -1,4 +1,4 @@
-package com.plcoding.mvvmtodoapp.data
+package com.plcoding.mvvmtodoapp.data.todo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,6 +12,7 @@ data class Todo(
     val isImportant: Boolean,
     val taskColor: Int,
     val dateDone: Long,
+    val coinValue: Int,
     @PrimaryKey val id: Int? = null
 ) {
     companion object {

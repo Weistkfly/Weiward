@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,6 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MVVMTodoAppTheme {
                 val navController = rememberNavController()
+
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(

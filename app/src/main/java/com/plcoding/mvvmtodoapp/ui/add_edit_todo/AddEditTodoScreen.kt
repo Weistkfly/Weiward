@@ -18,9 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.plcoding.mvvmtodoapp.data.Todo
+import com.plcoding.mvvmtodoapp.data.todo.Todo
 import com.plcoding.mvvmtodoapp.util.UiEvent
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun AddEditTodoScreen(
