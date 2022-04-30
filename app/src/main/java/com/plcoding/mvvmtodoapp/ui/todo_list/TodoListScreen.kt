@@ -21,7 +21,7 @@ fun TodoListScreen(
     viewModel: TodoListViewModel = hiltViewModel()
 ) {
     val todos = viewModel.todos.collectAsState(initial = emptyList())
-    val coins = viewModel.coin
+    val coins = viewModel.coins.collectAsState(initial = emptyList())
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -69,7 +69,7 @@ fun TodoListScreen(
                     if (!todo.isDone){
                     TodoItem(
                         todo = todo,
-                        coin = coins,
+                        coin = coins.value.first(),
                         onEvent = viewModel::onEvent,
                         modifier = Modifier
                             .fillMaxWidth()

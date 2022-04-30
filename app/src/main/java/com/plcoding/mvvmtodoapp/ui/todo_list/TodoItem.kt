@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,7 +30,7 @@ import java.util.*
 @Composable
 fun TodoItem(
     todo: Todo,
-    coin: Coin?,
+    coin: Coin,
     onEvent: (TodoListEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -114,6 +113,7 @@ fun TodoItem(
             checked = todo.isDone,
             onCheckedChange = { isChecked ->
                 onEvent(TodoListEvent.OnDoneChange(todo, isChecked))
+                onEvent(TodoListEvent.ClaimCoinReward(todo, coin))
             }
         )
     }

@@ -15,7 +15,6 @@ fun DoneTodoListScreen(
     viewModel: DoneTodoListViewModel = hiltViewModel()
 ) {
     val todos = viewModel.todos.collectAsState(initial = emptyList())
-    val coins = viewModel.coins.collectAsState(initial = emptyList())
 
         Column(
             modifier = Modifier
@@ -32,7 +31,6 @@ fun DoneTodoListScreen(
                     if (todo.isDone) {
                         DoneTodoItem(
                             todo = todo,
-                            coin = coins.value.firstOrNull(),
                             onEvent = viewModel::onEvent,
                             modifier = Modifier
                                 .fillMaxWidth()

@@ -20,11 +20,9 @@ import com.plcoding.mvvmtodoapp.data.todo.Todo
 import com.plcoding.mvvmtodoapp.ui.theme.importantTask
 import java.util.*
 
-
 @Composable
 fun DoneTodoItem(
     todo: Todo,
-    coin: Coin?,
     onEvent: (DoneTodoListEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -85,13 +83,6 @@ fun DoneTodoItem(
                 )
                 Text(text = "Added on ${Date(todo.dateDone).toInstant()}")
             }
-        }
-        Button(
-            onClick = {
-                onEvent(DoneTodoListEvent.ClaimCoinReward(todo, coin))
-            }
-        ) {
-            Text(text = "Claim")
         }
     }
 }

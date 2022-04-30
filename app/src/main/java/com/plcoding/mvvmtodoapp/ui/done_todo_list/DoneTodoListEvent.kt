@@ -5,5 +5,5 @@ import com.plcoding.mvvmtodoapp.data.todo.Todo
 
 sealed class DoneTodoListEvent {
     data class OnDeleteTodoClick(val todo: Todo): DoneTodoListEvent()
-    data class ClaimCoinReward(val todo: Todo, val coin: Coin?): DoneTodoListEvent()
+    //data class ClaimCoinReward(val todo: Todo, val coin: Coin?): DoneTodoListEvent()
 }
