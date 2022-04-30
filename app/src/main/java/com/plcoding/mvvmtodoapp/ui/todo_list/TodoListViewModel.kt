@@ -1,13 +1,19 @@
 package com.plcoding.mvvmtodoapp.ui.todo_list
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.mvvmtodoapp.data.todo.Todo
 import com.plcoding.mvvmtodoapp.data.TodoRepository
+import com.plcoding.mvvmtodoapp.data.coin.Coin
 import com.plcoding.mvvmtodoapp.util.Routes
 import com.plcoding.mvvmtodoapp.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +25,9 @@ class TodoListViewModel @Inject constructor(
 
     val todos = repository.getTodos()
     val coins = repository.getCoins()
+
+    var coin by mutableStateOf<Coin?>(null)
+        private set
 
     private val _uiEvent =  Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -72,17 +81,6 @@ class TodoListViewModel @Inject constructor(
                         )
                     )
                 }
-            }
-
-            is TodoListEvent.GetCoinReward -> {
-                viewModelScope.launch {
-                    repository.insertCoin(
-                        event.coin.copy(
-                            earnedCoins = event.todo.coinValue + event.coin.earnedCoins
-                        )
-                    )
-                }
-
             }
         }
     }

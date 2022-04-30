@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class Coin(
     val earnedCoins: Int,
     val spentCoins: Int,
+    val timeInMinutes: Int,
     @PrimaryKey val id: Int? = null
 )

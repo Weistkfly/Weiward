@@ -76,9 +76,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(Routes.DONE_TODO_LIST) {
                                 DoneTodoListScreen(
-                                    onNavigate = {
-                                        navController.navigate(it.route)
-                                    }
+
                                 )
                             }
                             composable(Routes.SHOP) {

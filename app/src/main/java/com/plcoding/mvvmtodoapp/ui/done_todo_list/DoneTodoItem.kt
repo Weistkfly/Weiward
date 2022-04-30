@@ -1,18 +1,11 @@
-package com.plcoding.mvvmtodoapp.ui.todo_list
+package com.plcoding.mvvmtodoapp.ui.done_todo_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,10 +22,10 @@ import java.util.*
 
 
 @Composable
-fun TodoItem(
+fun DoneTodoItem(
     todo: Todo,
     coin: Coin?,
-    onEvent: (TodoListEvent) -> Unit,
+    onEvent: (DoneTodoListEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -93,28 +86,12 @@ fun TodoItem(
                 Text(text = "Added on ${Date(todo.dateDone).toInstant()}")
             }
         }
-        IconButton(onClick = {
-            onEvent(TodoListEvent.OnTaskImportanceChange(todo, todo.isImportant))
-        }) {
-            Icon(
-                imageVector = Icons.Filled.Warning,
-                tint = importantTask,
-                contentDescription = "Importance"
-            )
-        }
-        IconButton(onClick = {
-            onEvent(TodoListEvent.OnDeleteTodoClick(todo))
-        }) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Delete"
-            )
-        }
-        Checkbox(
-            checked = todo.isDone,
-            onCheckedChange = { isChecked ->
-                onEvent(TodoListEvent.OnDoneChange(todo, isChecked))
+        Button(
+            onClick = {
+                onEvent(DoneTodoListEvent.ClaimCoinReward(todo, coin))
             }
-        )
+        ) {
+            Text(text = "Claim")
+        }
     }
 }
